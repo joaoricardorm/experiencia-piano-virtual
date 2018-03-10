@@ -1,0 +1,96 @@
+<script>
+let audioCtx = new AudioContext();
+let oscillator = audioCtx.createOscillator();
+
+
+oscillator.connect(audioCtx.destination);
+
+oscillator.frequency.value = 40 * 1000;
+
+oscillator.start();
+
+function audio(frequencia){
+
+
+oscillator.frequency.value = frequencia;
+
+setTimeout(() => oscillator.frequency.value = 0, 500);
+
+//setTimeout(() => oscillator.frequency.value = 20*20000, 300);
+//setTimeout(() => oscillator.frequency.value *= Math.pow(2, 1/12), 2000);
+
+}
+
+function iniciarAudio(){
+  oscillator.frequency.value = 261;
+}
+
+function pararAudio(){
+  oscillator.frequency.value = 20 * 1000;
+}
+
+
+//oscillator.stop(audioCtx.currentTime + 1);
+
+notas = [
+	 { nome: 'Dó', frequencia: 261.625519, meioTom: false },
+         { nome: 'Dó#', frequencia: 277.300000, meioTom: true },
+         { nome: 'Ré', frequencia: 293.664734, meioTom: false },
+	 { nome: 'Ré#', frequencia: 311.64, meioTom: true },
+         { nome: 'Mi', frequencia: 329.627533, meioTom: false },
+         { nome: 'Fá', frequencia: 349.228241, meioTom: false  },
+         { nome: 'Fá#', frequencia: 370.61, meioTom: true },
+         { nome: 'Sol', frequencia: 391.995392, meioTom: false  },
+	 { nome: 'Sol#', frequencia: 415.99, meioTom: true },
+         { nome: 'Lá', frequencia: 440, meioTom: false  },
+         { nome: 'La#', frequencia: 466.94, meioTom: true },
+         { nome: 'Si', frequencia: 493.883301, meioTom: false  },
+         { nome: 'Dó 2', frequencia: 523.251099, meioTom: false  },
+         { nome: 'Ré 2', frequencia: 587.329529, meioTom: false  },
+         { nome: 'Mi 2', frequencia: 659.255127, meioTom: false  },
+         { nome: 'Fá 2', frequencia: 698.456482, meioTom: false  },   
+         { nome: 'Sol 2', frequencia: 783.990845, meioTom: false  },
+         { nome: 'A 2', frequencia: 880 },
+ 	];
+
+for(i=1;i<=notas.length;i++){ 
+        freq = oscillator.frequency.value + i * 100;
+
+
+	estilo = null;
+	if(notas[i-1].meioTom){
+		estilo = 'meio-tom';
+	}
+	document.write('<button class="tecla '+estilo+'" value="'+notas[i-1].nome+'" onclick="audio('+notas[i-1].frequencia+');">'+notas[i-1].nome+'</button>');
+}
+</script>
+
+
+<style>
+	.tecla { width:50px; height:180px; border:1px solid solid; }
+
+	.meio-tom {
+           background: #333;
+	   color: #ccc;
+           vertical-align:top;
+	   height: 80px!important;
+	   width: 30px;
+           font-size:50%;
+	   position: absolute;
+	   margin-left: -15px;
+           border: 1px solid black;
+        }
+	.meio-tom:active { background:#000; }
+</style>
+
+<br><br>	
+
+Experiência de Teclado do <a href="http://fb.com/joaoricardorm" target="_blank">@JoaoRicardoRM</a>
+<br>
+Feito literalmente no bloco de notas do Windows.
+
+<br><br>
+
+
+<button onclick="pararAudio()">Parar audio</button>
+<button onclick="iniciarAudio()">Iniciar audio</button>
